@@ -20,9 +20,29 @@ The Process Instructions group walks through the string one character at a time.
 
 ![Process Instructions group](media/process-instructions.png)
 
+The A / B group builds the "Processed / Total" text.
+
+![A / B group](media/a-b.png)
+
 ## Visualization
 
 ![Day 1 Visualization group](media/visualization.png)
+
+### P1 / P2
+
+![P1 / P2 frame](media/visualization-p1-p2.png)
+
+### Arrows
+
+![Arrows frame](media/visualization-arrows.png)
+
+### Floor
+
+![Floor frame](media/visualization-floor.png)
+
+### Progress Bar
+
+![Progress Bar frame](media/visualization-progress-bar.png)
 
 ### Materials
 
@@ -33,3 +53,7 @@ The Process Instructions group walks through the string one character at a time.
 ![Progress Bar](media/material-progress-bar.png)
 
 ![Floor](media/material-floor.png)
+
+## Compositor
+
+![Compositor nodes](media/compositor.png)
