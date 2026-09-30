@@ -25,7 +25,7 @@ This repository is public. Never put machine-specific or personal details in tra
 ## Puzzle input and puzzle text
 
 - Never commit puzzle inputs or puzzle text. `.gitignore` covers `input*.txt` and `inputs/`.
-- The String input named "Puzzle Input" must be empty in every committed `.blend`. The user checks this; never edit `.blend` files.
+- The String input named "Puzzle Input" must be empty in every committed `.blend`. The user checks this. Node trees are always the user's own work: edit a `.blend` only for a file-level fix the user asks for (such as a font path), changing as few bytes as possible, then load it with `blender -b` to verify.
 - The user may re-save a `.blend` at any time. Review `git status` and the diff before staging, and do not use `git add -A` blindly.
 - Media may show the user's own answers. That is fine, but mention it when adding it.
 
@@ -65,10 +65,9 @@ python .claude/scripts/stitch_images.py --dir <tmp_dir> days/dayXX/media
 ## Fonts
 
 - `fonts/` at the repo root holds each font once, even when several days use it, next to its license as `fonts/<Family>-LICENSE.txt`.
-- A `.blend` points to the font with a relative path (`//../../fonts/<File>.ttf` from `days/dayXX/`). The user sets this in Blender; never edit a `.blend`.
+- A `.blend` points to the font with a relative path (`//../../fonts/<File>.ttf` from `days/dayXX/`). The user sets this in Blender, or asks for a minimal path patch.
 - Each day README lists the fonts it uses, with a link to the license, for example: `Fonts: IBM Plex Mono, SIL Open Font License 1.1 ([license](../../fonts/IBMPlexMono-LICENSE.txt)).`
 - Before adding a font, check its license. The SIL Open Font License allows redistribution with the license text included (IBM Plex: https://github.com/IBM/plex). Never write a license from memory; copy the official text.
-- Day 1 still has its own copy (`days/day01/IBMPlexMono-*`) because its `.blend` points to `//IBMPlexMono-Regular.ttf`. Once the user re-saves it with the shared path, move the files to `fonts/` and update its README.
 
 ## Git and pull requests
 

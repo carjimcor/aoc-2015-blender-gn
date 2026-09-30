@@ -8,7 +8,7 @@ I was not sure how to represent this problem visually, so I made a panel like an
   <img src="media/animation.gif" alt="Day 1 animation" width="480">
 </p>
 
-Font: IBM Plex Mono, used under the SIL Open Font License 1.1 ([license](IBMPlexMono-LICENSE.txt)).
+Fonts: IBM Plex Mono, SIL Open Font License 1.1 ([license](../../fonts/IBMPlexMono-LICENSE.txt)).
 
 ## Solution
 
