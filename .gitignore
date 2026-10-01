@@ -2,5 +2,6 @@
 *.blend2
 input*.txt
 inputs/
+todo.txt
 .claude/settings.local.json
 CLAUDE.local.md
