@@ -1,7 +1,10 @@
-"""Convert a video to a small looping GIF for a day README.
+"""Convert a video to a small looping animation for a day README.
 
-Usage: python mp4_to_gif.py input.mp4 output.gif [width=480] [fps=20]
+Usage: python mp4_to_gif.py input.mp4 output.gif|output.webp [width=480] [fps=20]
 Needs: pip install av pillow
+
+GIF has 256 colours, fine for flat graphics. For renders with many colours or shading,
+write .webp instead: full colour, usually smaller, and GitHub shows it like a GIF.
 
 Any source and target frame rate works (for example 60 or 24 fps in, 20 or 24 fps out).
 GIF delays are whole centiseconds, so they are spread to keep the total duration exact.
@@ -36,6 +39,14 @@ frames = {
 }
 frames = [frames[i] for i in wanted]
 
+# Delay of frame k = difference of rounded cumulative times, in milliseconds.
+delays = [10 * (round((k + 1) * 100 / fps) - round(k * 100 / fps)) for k in range(len(frames))]
+
+if dst.lower().endswith(".webp"):
+    frames[0].save(dst, save_all=True, append_images=frames[1:], duration=delays, loop=0, quality=90, method=6)
+    print(f"{dst}: {len(frames)} frames, {width}x{height}, {sum(delays) / 1000:.2f} s")
+    sys.exit()
+
 # One palette for the whole clip avoids flicker; no dithering keeps flat colors clean.
 sample = frames[::6]
 mosaic = Image.new("RGB", (width, height * len(sample)))
@@ -43,9 +54,6 @@ for n, frame in enumerate(sample):
     mosaic.paste(frame, (0, n * height))
 palette = mosaic.quantize(256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
 frames = [f.quantize(palette=palette, dither=Image.Dither.NONE) for f in frames]
-
-# Delay of frame k = difference of rounded cumulative times, in milliseconds.
-delays = [10 * (round((k + 1) * 100 / fps) - round(k * 100 / fps)) for k in range(len(frames))]
 
 frames[0].save(dst, save_all=True, append_images=frames[1:], duration=delays, loop=0, disposal=1)
 print(f"{dst}: {len(frames)} frames, {width}x{height}, {sum(delays) / 1000:.2f} s")

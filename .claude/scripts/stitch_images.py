@@ -33,6 +33,32 @@ def compose(placed):
     return canvas, mask
 
 
+def mismatch(canvas, mask, img, x, y):
+    """Share of overlapping pixels that disagree if img sits at (x, y); None if nothing overlaps."""
+    ya, yb, xa, xb = max(y, 0), max(-y, 0), max(x, 0), max(-x, 0)
+    h = min(canvas.height - ya, img.height - yb)
+    w = min(canvas.width - xa, img.width - xb)
+    if h <= 0 or w <= 0:
+        return None
+    both = mask[ya:ya + h, xa:xa + w]
+    if both.sum() < 1600:
+        return None
+    pa = np.asarray(canvas, dtype=np.int16)[ya:ya + h, xa:xa + w]
+    pb = np.asarray(img, dtype=np.int16)[yb:yb + h, xb:xb + w]
+    return (np.abs(pa - pb).sum(axis=2)[both] > 12).mean()
+
+
+def refine(canvas, mask, img, x, y, reach=4):
+    """Best position within a few pixels of (x, y): Blender can land a pan slightly off."""
+    best = None
+    for dy in range(-reach, reach + 1):
+        for dx in range(-reach, reach + 1):
+            m = mismatch(canvas, mask, img, x + dx, y + dy)
+            if m is not None and (best is None or m < best[0]):
+                best = (m, x + dx, y + dy)
+    return best
+
+
 def locate(canvas, mask, img, tries=8):
     """Find where img sits on the canvas: phase correlation for candidates, exact diff to confirm."""
     a, b = gray(canvas), gray(img)
@@ -78,7 +104,20 @@ def stitch(out, sources):
         placed = []
         for t in layout["tiles"]:
             im = Image.open(os.path.join(base, t["file"])).convert("RGB")
-            placed.append((im.crop((crop, crop, im.width - crop, im.height - crop)), t["x"] + crop, t["y"] + crop))
+            im = im.crop((crop, crop, im.width - crop, im.height - crop))
+            x, y = t["x"] + crop, t["y"] + crop
+            if placed:  # check the offsets against the image itself
+                canvas, mask = compose(placed)
+                x0, y0 = min(px for _, px, _ in placed), min(py for _, _, py in placed)
+                best = refine(canvas, mask, im, x - x0, y - y0)
+                if best and best[0] < 0.002:
+                    x, y = best[1] + x0, best[2] + y0
+                elif best:  # far off: search the whole canvas
+                    found = locate(canvas, mask, im)
+                    if not found:
+                        sys.exit(f"{t['file']} does not line up with the other tiles.")
+                    x, y = found[1] + x0, found[2] + y0
+            placed.append((im, x, y))
     else:
         box = None
         images = [Image.open(p).convert("RGB") for p in sources]

@@ -2,6 +2,10 @@
 
 https://adventofcode.com/2015/day/1
 
+**Part 1:** follow a string of `(` (up one floor) and `)` (down one floor) from floor 0 and find the final floor.
+
+**Part 2:** find the position of the first character that takes you below floor 0.
+
 I was not sure how to represent this problem visually, so I made a panel like an elevator display. Each part fills in once its value is known.
 
 <p align="center">
@@ -44,15 +48,23 @@ The A / B group builds the "Processed / Total" text.
 
 ![Progress Bar frame](media/visualization-progress-bar.png)
 
-### Materials
+## Materials
 
-![P1 / P2](media/material-p1-p2.png)
+### P1 / P2
 
-![Arrows](media/material-arrows.png)
+![P1 / P2 material](media/material-p1-p2.png)
 
-![Progress Bar](media/material-progress-bar.png)
+### Arrows
 
-![Floor](media/material-floor.png)
+![Arrows material](media/material-arrows.png)
+
+### Progress Bar
+
+![Progress Bar material](media/material-progress-bar.png)
+
+### Floor
+
+![Floor material](media/material-floor.png)
 
 ## Compositor
 

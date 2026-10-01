@@ -1,6 +1,7 @@
 """Screenshot a node tree in overlapping tiles using Blender's own UI.
 
-Usage (one Blender window opens, captures every target and closes; the .blend is never saved):
+Usage (one Blender window opens, captures every target and closes; the .blend is never saved,
+and any String node labelled "Puzzle Input" is blanked in memory first):
   blender file.blend --python capture_node_tree.py -- out_dir px_per_unit "slug=Name" "slug=Name|Frame" ...
 Then join each target's tiles into media_dir/<slug>.png:
   python stitch_images.py --dir out_dir media_dir
@@ -60,6 +61,22 @@ def pan(dx, dy):
         bpy.ops.view2d.pan(deltax=dx, deltay=dy)
 
 
+def marker():
+    """Screen position of a fixed point of the tree, to check where the view really is."""
+    return find()[2].view2d.view_to_region(0, 0, clip=False)
+
+
+def settle(expected):
+    """Re-pan until the view is where it should be (Blender can overshoot a pan)."""
+    for _ in range(4):
+        yield 0.4
+        x, y = marker()
+        if abs(x - expected[0]) <= 1 and abs(y - expected[1]) <= 1:
+            return
+        pan(x - expected[0], y - expected[1])
+    print("warning: view is not where expected", flush=True)
+
+
 def fit_view(tree, cx, cy, half_w, half_h):
     """Zoom the node editor so the given window (node units) fills the region.
 
@@ -79,11 +96,21 @@ def fit_view(tree, cx, cy, half_w, half_h):
     return corners
 
 
+def hide_puzzle_input():
+    """Blank every String node labelled "Puzzle Input" (in memory only), so no input reaches an image."""
+    for tree in bpy.data.node_groups:
+        for n in tree.nodes:
+            if n.bl_idname == 'FunctionNodeInputString' and "Puzzle Input" in (n.name, n.label):
+                n.string = ""
+
+
 def capture():
+    hide_puzzle_input()
     win, area, region = find()
-    with bpy.context.temp_override(window=win, area=area, region=region):
-        bpy.ops.screen.screen_full_area(use_hide_panels=False)
-    yield 1.0
+    if not win.screen.show_fullscreen:  # the toggle would undo a file saved already maximized
+        with bpy.context.temp_override(window=win, area=area, region=region):
+            bpy.ops.screen.screen_full_area(use_hide_panels=False)
+        yield 1.0
     initial_object = bpy.context.view_layer.objects.active
     for slug, target in TARGETS:
         name, _, frame = target.partition("|")
@@ -133,13 +160,13 @@ def capture_one(out, name, frame, initial_object):
     ui = bpy.context.preferences.system.ui_scale
     xs, ys = [], []
     for n in tree.nodes:
-        if frame and frame not in (n.name, n.label):
+        if frame and not (n.bl_idname == 'NodeFrame' and frame in (n.name, n.label)):  # reroutes can share a label
             continue
         x, y = n.location_absolute
         xs += [x, x + n.dimensions.x / ui]
         ys += [y, y - n.dimensions.y / ui]
     tight = min(xs), max(xs), min(ys), max(ys)  # left, right, bottom, top
-    pad_top = PAD_TOP if tree.bl_idname == 'GeometryNodeTree' else PAD
+    pad_top = PAD_TOP if tree.bl_idname == 'GeometryNodeTree' and not frame else PAD  # a frame holds its badges
     left, right = tight[0] - MARGIN, tight[1] + MARGIN
     bottom, top = tight[2] - MARGIN, tight[3] + (CROP + pad_top) / TARGET
     region = find()[2]
@@ -184,6 +211,7 @@ def capture_one(out, name, frame, initial_object):
 
     os.makedirs(out, exist_ok=True)
     tiles = []
+    start = marker()  # tile (0, 0)
     for j in range(ny):
         for i in range(nx):
             tile = f"tile_r{j}_c{i}.png"
@@ -194,10 +222,10 @@ def capture_one(out, name, frame, initial_object):
             tiles.append({"file": tile, "x": i * step_x, "y": j * step_y})
             if i < nx - 1:
                 pan(step_x, 0)
-                yield 0.4
+                yield from settle((start[0] - (i + 1) * step_x, start[1] + j * step_y))
         if j < ny - 1:
             pan(-(nx - 1) * step_x, -step_y)
-            yield 0.4
+            yield from settle((start[0], start[1] + (j + 1) * step_y))
     json.dump({"crop": CROP, "box": box, "tiles": tiles}, open(os.path.join(out, "layout.json"), "w"), indent=1)
 
 
@@ -209,7 +237,7 @@ def tick():
         return next(gen)
     except StopIteration:
         return None
-    except Exception:
+    except BaseException:
         import traceback
         traceback.print_exc()
         os._exit(1)
