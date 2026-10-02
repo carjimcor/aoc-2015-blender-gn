@@ -13,7 +13,7 @@ This repository is public. Never put machine-specific or personal details in tra
 
 ## Layout
 
-- `README.md`: overview, how to use, a note that puzzle text and inputs are not included (Advent of Code FAQ), AI use note. No license or conventions sections.
+- `README.md`: overview, a Days grid (see Media), how to use, a note that puzzle text and inputs are not included (Advent of Code FAQ), AI use note. No license or conventions sections.
 - `LICENSE`: official CC BY 4.0 text, unmodified. Never write it from memory; download it from creativecommons.org.
 - `days/dayXX/`: one folder per day, `XX` zero-padded.
   - `aoc-2015-XX.blend`
@@ -33,7 +33,7 @@ This repository is public. Never put machine-specific or personal details in tra
 ## Day README
 
 1. Title and puzzle link, then a one-sentence summary of each part in your own words (`**Part 1:**`, `**Part 2:**`). Part 2 is only visible on the site after solving part 1, so the README is where readers learn it. Never copy the puzzle text, its story, examples or answers. Then a short note from the user about the solution (ask if unsure).
-2. The animation, centered with HTML and a fixed width (`<p align="center"><img src="media/animation.gif" alt="..." width="480"></p>`, or `animation.webp`). Several animations (day 3) are named `animation-<name>.webp` and shown side by side at `width="260"`, with a sentence saying what each one shows.
+2. The animation, centered with HTML and a fixed width (`<p align="center"><img src="media/animation.gif" alt="..." width="480"></p>`, or `animation.webp`). Several animations (day 3) are named `animation-<name>.webp` and stacked, each in its own centered paragraph at the same `width="480"` with a caption below the image (`<br>` then `<em>Part 1</em>`).
 3. A Notes list when the file needs explaining: which inputs to change, baking before playing, camera tweaks, what the visualization shows beyond the puzzle.
 4. Sections in order: Solution (main tree, then each group), Visualization (overview, one image per frame), Materials (a `###` heading with the name above each material), Compositor. Skip what does not exist. Images come from `media/`.
 5. Blender 5.2 is the default. If a day needs another version, say so in that day's README.
@@ -41,6 +41,8 @@ This repository is public. Never put machine-specific or personal details in tra
 ## Media
 
 - Upload an animation, not the MP4: GitHub does not play relative MP4 links. The user may send an MP4; keep it outside the repo and commit only `media/animation.gif`, or `media/animation.webp` when a GIF's 256 colours show artifacts (renders with many colours or shading, like day 2).
+- Every day has `media/thumbnail.webp` for the Days grid in the root README: `python .claude/scripts/make_thumbnail.py <day> days/dayXX/media/thumbnail.webp [video.mp4]`. With a video it is the animation (240x320) with a "Day 01" label below, in IBM Plex Mono from `fonts/`; without one it is a plain placeholder of the same size. A day with several animations uses its main one (day 3: part 2). When a day is finished, replace its placeholder.
+- The Days grid is a centered paragraph of images, 5 per line (`<p align="center">` with `<img ... width="19%">`), not a table: GitHub always draws table borders and sizes columns by content. Finished days are wrapped in a link to their folder; placeholders are not.
 - Convert with `python .claude/scripts/mp4_to_gif.py in.mp4 out.gif|out.webp [width] [fps]`. Defaults are 480 px wide and 20 fps. Any source rate works (60 or 24 fps in, 20 or 24 fps out), and the 10 s duration stays exact. The script uses one palette and no dithering. A 10 s clip is about 0.8 MB. Keep GIFs under a few MB.
 - Node tree screenshots are captured automatically (next section). If the user sends screenshots instead, join them with `python .claude/scripts/stitch_images.py out.png img1.png img2.png ...`. It works for any number of images, in any order, horizontally or vertically. They must share one zoom and overlap; an image with no node content cannot be placed.
 - Do not use Git LFS. Files are small, and "Download ZIP" on GitHub does not include LFS files.

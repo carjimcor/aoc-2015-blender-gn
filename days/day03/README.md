@@ -11,9 +11,18 @@ I used points to handle the logic. Point 0 is the starting house, at the world o
 The two parts cannot be shown at the same time, so there are three animations: part 1, part 2, and part 2 seen from above with an orthographic camera.
 
 <p align="center">
-  <img src="media/animation-part-1.webp" alt="Part 1" width="260">
-  <img src="media/animation-part-2.webp" alt="Part 2" width="260">
-  <img src="media/animation-part-2-top.webp" alt="Part 2 from above" width="260">
+  <img src="media/animation-part-1.webp" alt="Day 3 animation, part 1" width="480"><br>
+  <em>Part 1</em>
+</p>
+
+<p align="center">
+  <img src="media/animation-part-2.webp" alt="Day 3 animation, part 2" width="480"><br>
+  <em>Part 2</em>
+</p>
+
+<p align="center">
+  <img src="media/animation-part-2-top.webp" alt="Day 3 animation, part 2 from above" width="480"><br>
+  <em>Part 2 from above, orthographic camera</em>
 </p>
 
 ## Notes
