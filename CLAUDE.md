@@ -33,9 +33,10 @@ This repository is public. Never put machine-specific or personal details in tra
 ## Day README
 
 1. Title and puzzle link, then a one-sentence summary of each part in your own words (`**Part 1:**`, `**Part 2:**`). Part 2 is only visible on the site after solving part 1, so the README is where readers learn it. Never copy the puzzle text, its story, examples or answers. Then a short note from the user about the solution (ask if unsure).
-2. The GIF, centered with HTML and a fixed width (`<p align="center"><img src="media/animation.gif" alt="..." width="480"></p>`, or `animation.webp`).
-3. Sections in order: Solution (main tree, then each group), Visualization (overview, one image per frame), Materials (a `###` heading with the name above each material), Compositor. Skip what does not exist. Images come from `media/`.
-4. Blender 5.2 is the default. If a day needs another version, say so in that day's README.
+2. The animation, centered with HTML and a fixed width (`<p align="center"><img src="media/animation.gif" alt="..." width="480"></p>`, or `animation.webp`). Several animations (day 3) are named `animation-<name>.webp` and shown side by side at `width="260"`, with a sentence saying what each one shows.
+3. A Notes list when the file needs explaining: which inputs to change, baking before playing, camera tweaks, what the visualization shows beyond the puzzle.
+4. Sections in order: Solution (main tree, then each group), Visualization (overview, one image per frame), Materials (a `###` heading with the name above each material), Compositor. Skip what does not exist. Images come from `media/`.
+5. Blender 5.2 is the default. If a day needs another version, say so in that day's README.
 
 ## Media
 
