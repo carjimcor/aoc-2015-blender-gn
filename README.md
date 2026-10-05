@@ -8,7 +8,7 @@ Solutions to [Advent of Code 2015](https://adventofcode.com/2015) built with Ble
   <a href="days/day01"><img src="days/day01/media/thumbnail.webp" alt="Day 01" width="19%"></a>
   <a href="days/day02"><img src="days/day02/media/thumbnail.webp" alt="Day 02" width="19%"></a>
   <a href="days/day03"><img src="days/day03/media/thumbnail.webp" alt="Day 03" width="19%"></a>
-  <img src="days/day04/media/thumbnail.webp" alt="Day 04" width="19%">
+  <a href="days/day04"><img src="days/day04/media/thumbnail.webp" alt="Day 04" width="19%"></a>
   <img src="days/day05/media/thumbnail.webp" alt="Day 05" width="19%">
   <img src="days/day06/media/thumbnail.webp" alt="Day 06" width="19%">
   <img src="days/day07/media/thumbnail.webp" alt="Day 07" width="19%">
@@ -35,7 +35,7 @@ Solutions to [Advent of Code 2015](https://adventofcode.com/2015) built with Ble
 ## How to use
 
 1. Open a day's `.blend` file in Blender 5.2. If a day needs a different Blender version, it is stated in that day's README.
-2. Paste your own puzzle input into the String node labelled "Puzzle Input", somewhere in the node tree. It accepts multi-line text.
+2. Paste your own puzzle input into the String node labelled "Puzzle Input", somewhere in the node tree. It accepts multi-line text. When the input is a short key, it goes in the "Puzzle Input" field of the modifier instead; the day's README says so.
 3. The answers may appear somewhere in the viewer, the viewport, or as a visual representation that can be seen by playing the animation.
 
 ## Puzzles

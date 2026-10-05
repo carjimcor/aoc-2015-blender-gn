@@ -1,7 +1,9 @@
 """Make a day's thumbnail for the Days grid in the root README: the animation with a "Day 01" label below.
 
-Usage: python make_thumbnail.py <day> <out.webp> [video.mp4]
-Without a video it makes a static placeholder for a day that is not finished yet.
+Usage: python make_thumbnail.py <day> <out.webp> [video.mp4 | image.png]
+With an image (a day without animation, such as a node capture) it makes a still thumbnail:
+the editor background becomes the usual dark blue and the image is centered.
+Without either it makes a static placeholder for a day that is not finished yet.
 Needs: pip install av pillow
 """
 import os
@@ -29,6 +31,23 @@ def with_label(frame, background, color):
 if src is None:  # placeholder: same size as a real thumbnail, so every row has the same height
     background = (28, 29, 38)
     with_label(Image.new("RGB", (WIDTH, HEIGHT), background), background, (110, 112, 125)).save(dst, quality=90)
+    sys.exit()
+
+if src.lower().endswith((".png", ".jpg")):
+    background = (35, 37, 57)  # same dark blue as the day 1 render
+    image = Image.open(src).convert("RGB")
+    editor = image.getpixel((2, 2))
+    pixels = image.load()
+    for y in range(image.height):
+        for x in range(image.width):
+            if sum(abs(a - b) for a, b in zip(pixels[x, y], editor)) <= 6:
+                pixels[x, y] = background
+    margin = 16
+    scale = min((WIDTH - 2 * margin) / image.width, (HEIGHT - 2 * margin) / image.height)
+    image = image.resize((round(image.width * scale), round(image.height * scale)), Image.LANCZOS)
+    box = Image.new("RGB", (WIDTH, HEIGHT), background)
+    box.paste(image, ((WIDTH - image.width) // 2, (HEIGHT - image.height) // 2))
+    with_label(box, background, (220, 222, 230)).save(dst, quality=90)
     sys.exit()
 
 import av  # noqa: E402  (only needed for real thumbnails)

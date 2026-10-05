@@ -7,7 +7,7 @@ Then join each target's tiles into media_dir/<slug>.png:
   python stitch_images.py --dir out_dir media_dir
 
 Name is a Geometry Nodes group, the compositor group, or a material (shader tree).
-Frame (optional) is the name or label of a Frame node, to capture only that part.
+Frame (optional) is the name or label of a Frame node, to capture only that part, or "@NodeName" for one node.
 px_per_unit sets the zoom: about 1.0 keeps node text readable, 0.5 fits a mid-size group in one image.
 Tiles use the editor's current size, so a larger Blender window gives fewer tiles.
 """
@@ -160,13 +160,16 @@ def capture_one(out, name, frame, initial_object):
     ui = bpy.context.preferences.system.ui_scale
     xs, ys = [], []
     for n in tree.nodes:
-        if frame and not (n.bl_idname == 'NodeFrame' and frame in (n.name, n.label)):  # reroutes can share a label
+        if frame and frame.startswith("@"):  # a single node, by name
+            if n.name != frame[1:]:
+                continue
+        elif frame and not (n.bl_idname == 'NodeFrame' and frame in (n.name, n.label)):  # reroutes can share a label
             continue
         x, y = n.location_absolute
         xs += [x, x + n.dimensions.x / ui]
         ys += [y, y - n.dimensions.y / ui]
     tight = min(xs), max(xs), min(ys), max(ys)  # left, right, bottom, top
-    pad_top = PAD_TOP if tree.bl_idname == 'GeometryNodeTree' and not frame else PAD  # a frame holds its badges
+    pad_top = PAD_TOP if tree.bl_idname == 'GeometryNodeTree' and (not frame or frame.startswith("@")) else PAD  # a frame holds its badges
     left, right = tight[0] - MARGIN, tight[1] + MARGIN
     bottom, top = tight[2] - MARGIN, tight[3] + (CROP + pad_top) / TARGET
     region = find()[2]
