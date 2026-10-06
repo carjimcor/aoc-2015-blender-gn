@@ -1,6 +1,6 @@
 """Convert a video to a small looping animation for a day README.
 
-Usage: python mp4_to_gif.py input.mp4 output.gif|output.webp [width=480] [fps=20]
+Usage: python mp4_to_gif.py input.mp4 output.gif|output.webp [width=480] [fps=20] [webp_quality=90]
 Needs: pip install av pillow
 
 GIF has 256 colours, fine for flat graphics. For renders with many colours or shading,
@@ -17,6 +17,7 @@ from PIL import Image
 src, dst = sys.argv[1], sys.argv[2]
 width = int(sys.argv[3]) if len(sys.argv) > 3 else 480
 fps = float(sys.argv[4]) if len(sys.argv) > 4 else 20
+quality = int(sys.argv[5]) if len(sys.argv) > 5 else 90  # lower it for busy clips, such as scrolling text
 
 container = av.open(src)
 stream = container.streams.video[0]
@@ -43,7 +44,7 @@ frames = [frames[i] for i in wanted]
 delays = [10 * (round((k + 1) * 100 / fps) - round(k * 100 / fps)) for k in range(len(frames))]
 
 if dst.lower().endswith(".webp"):
-    frames[0].save(dst, save_all=True, append_images=frames[1:], duration=delays, loop=0, quality=90, method=6)
+    frames[0].save(dst, save_all=True, append_images=frames[1:], duration=delays, loop=0, quality=quality, method=6)
     print(f"{dst}: {len(frames)} frames, {width}x{height}, {sum(delays) / 1000:.2f} s")
     sys.exit()
 

@@ -38,6 +38,15 @@ def find():
     return win, area, next(r for r in area.regions if r.type == 'WINDOW')
 
 
+def reaches(root, target):
+    """True if target is root or a group used somewhere inside it."""
+    try:
+        find_route(root, target)
+        return True
+    except SystemExit:
+        return False
+
+
 def find_route(root, target):
     """Group nodes to enter, in order, to get from the root tree to the target group."""
     queue, seen = [(root, [])], set()
@@ -125,6 +134,14 @@ def capture_one(out, name, frame, initial_object):
     material = None if tree else bpy.data.materials[name]
     tree = tree or material.node_tree
     bpy.context.view_layer.objects.active = initial_object
+    if tree.bl_idname == 'GeometryNodeTree':  # several objects can each have their own tree (day 6)
+        for obj in bpy.data.objects:
+            mod = next((m for m in obj.modifiers if m.type == 'NODES' and m.node_group and reaches(m.node_group, tree)), None)
+            if mod:
+                bpy.context.view_layer.objects.active = obj
+                obj.modifiers.active = mod
+                yield 1.0
+                break
     if material:  # the shader editor shows the active material of the active object
         obj = next(o for o in bpy.data.objects if material.name in [sl.material.name for sl in o.material_slots if sl.material])
         bpy.context.view_layer.objects.active = obj

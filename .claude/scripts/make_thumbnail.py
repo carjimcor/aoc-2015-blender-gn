@@ -1,6 +1,6 @@
 """Make a day's thumbnail for the Days grid in the root README: the animation with a "Day 01" label below.
 
-Usage: python make_thumbnail.py <day> <out.webp> [video.mp4 | image.png]
+Usage: python make_thumbnail.py <day> <out.webp> [video.mp4 | image.png] [webp_quality=85]
 With an image (a day without animation, such as a node capture) it makes a still thumbnail:
 the editor background becomes the usual dark blue and the image is centered.
 Without either it makes a static placeholder for a day that is not finished yet.
@@ -13,6 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 day, dst = int(sys.argv[1]), sys.argv[2]
 src = sys.argv[3] if len(sys.argv) > 3 else None
+quality = int(sys.argv[4]) if len(sys.argv) > 4 else 85  # lower it for busy clips (day 5)
 
 WIDTH, HEIGHT, BAND, FPS = 240, 320, 40, 20
 FONT = os.path.join(os.path.dirname(__file__), "..", "..", "fonts", "IBMPlexMono-Regular.ttf")
@@ -75,5 +76,5 @@ for i in wanted:
     boxed.append(box)
 frames = [with_label(f, background, (220, 222, 230)) for f in boxed]
 delays = [10 * (round((k + 1) * 100 / FPS) - round(k * 100 / FPS)) for k in range(len(frames))]
-frames[0].save(dst, save_all=True, append_images=frames[1:], duration=delays, loop=0, quality=85, method=6)
+frames[0].save(dst, save_all=True, append_images=frames[1:], duration=delays, loop=0, quality=quality, method=6)
 print(f"{dst}: {len(frames)} frames")
