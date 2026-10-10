@@ -44,4 +44,4 @@ The puzzle text and inputs are not included: the [Advent of Code FAQ](https://ad
 
 ## AI use
 
-I use AI for administrative work, such as repository setup and git changes. The Blender files and the Geometry Nodes inside them are made by hand. I sometimes use AI to brainstorm ideas or when I am stuck on how to approach a problem.
+I use AI for administrative work, such as repository setup and git changes. The Blender files and the Geometry Nodes inside them are made by hand. The node layout is tidied with [blender-nodefmt](https://github.com/carjimcor/blender-nodefmt), a node formatter add-on. I sometimes use AI to brainstorm ideas or when I am stuck on how to approach a problem.

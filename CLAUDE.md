@@ -60,6 +60,7 @@ blender file.blend --python .claude/scripts/capture_node_tree.py -- <tmp_dir> 1.
 python .claude/scripts/stitch_images.py --dir <tmp_dir> days/dayXX/media
 ```
 
+- Before capturing, sort every tree of the file with [blender-nodefmt](https://github.com/carjimcor/blender-nodefmt) (all rules on, at the user's UI scale): `blender file.blend --python nodefmt_cli.py -- --fix --ui-scale <scale>`, then `--check`. Only the layout changes; review the result in the captures.
 - One run captures every target, so Blender opens once (about 10 s per target). Each target is `slug=Name` or `slug=Name|Frame`, and the slug becomes the image file name.
 - Name can be a Geometry Nodes group (on any object: the script switches to the object that uses it, as in day 6), the compositor group or a material. Frame is the name or label of a Frame node and captures only that part; `@NodeName` captures a single node.
 - For a day, capture every group, the compositor and every material it uses, plus one image per top-level frame of a big group. List them with a quick Blender script (`bpy.data.node_groups`, `bpy.data.materials`).
