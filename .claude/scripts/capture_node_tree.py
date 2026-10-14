@@ -115,6 +115,10 @@ def hide_puzzle_input():
 
 def capture():
     hide_puzzle_input()
+    win = bpy.context.window_manager.windows[0]
+    if not any(a.type == 'NODE_EDITOR' for a in win.screen.areas):  # file saved on a workspace without one
+        max(win.screen.areas, key=lambda a: a.width * a.height).ui_type = 'GeometryNodeTree'
+        yield 1.0
     win, area, region = find()
     if not win.screen.show_fullscreen:  # the toggle would undo a file saved already maximized
         with bpy.context.temp_override(window=win, area=area, region=region):
