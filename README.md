@@ -13,7 +13,7 @@ Solutions to [Advent of Code 2015](https://adventofcode.com/2015) built with Ble
   <a href="days/day06"><img src="days/day06/media/thumbnail.webp" alt="Day 06" width="19%"></a>
   <a href="days/day07"><img src="days/day07/media/thumbnail.webp" alt="Day 07" width="19%"></a>
   <a href="days/day08"><img src="days/day08/media/thumbnail.webp" alt="Day 08" width="19%"></a>
-  <img src="days/day09/media/thumbnail.webp" alt="Day 09" width="19%">
+  <a href="days/day09"><img src="days/day09/media/thumbnail.webp" alt="Day 09" width="19%"></a>
   <img src="days/day10/media/thumbnail.webp" alt="Day 10" width="19%">
   <img src="days/day11/media/thumbnail.webp" alt="Day 11" width="19%">
   <img src="days/day12/media/thumbnail.webp" alt="Day 12" width="19%">
@@ -32,6 +32,8 @@ Solutions to [Advent of Code 2015](https://adventofcode.com/2015) built with Ble
   <img src="days/day25/media/thumbnail.webp" alt="Day 25" width="19%">
 </p>
 
+A crossed-out eye on a thumbnail marks a day without a visualization in Blender. "AI" marks a day with a node group or an image made with AI (see AI use).
+
 ## How to use
 
 1. Open a day's `.blend` file in Blender 5.2. If a day needs a different Blender version, it is stated in that day's README.
@@ -44,4 +46,4 @@ The puzzle text and inputs are not included: the [Advent of Code FAQ](https://ad
 
 ## AI use
 
-I use AI for administrative work, such as repository setup and git changes. The Blender files and the Geometry Nodes inside them are made by hand. The node layout is tidied with [blender-nodefmt](https://github.com/carjimcor/blender-nodefmt), a node formatter add-on. I sometimes use AI to brainstorm ideas or when I am stuck on how to approach a problem.
+I use AI for administrative work, such as repository setup and git changes. The Blender files and the Geometry Nodes inside them are made by hand, except for node groups whose name ends in "(AI)": those are made with AI, and the day's README says so. A day without a visualization may show an idea for one, drawn with AI outside Blender. The node layout is tidied with [blender-nodefmt](https://github.com/carjimcor/blender-nodefmt), a node formatter add-on. I sometimes use AI to brainstorm ideas or when I am stuck on how to approach a problem.

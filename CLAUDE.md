@@ -5,7 +5,7 @@ Advent of Code 2015 solutions built with Blender Geometry Nodes (GN). Repository
 ## Writing style
 
 - Keep every file short, simple and professional. English only (files, commits, PRs), even if the chat is in Spanish.
-- No emojis, no badges, no filler.
+- No emojis, no shield badges, no filler.
 
 ## Private and local details
 
@@ -28,6 +28,7 @@ This repository is public. Never put machine-specific or personal details in tra
 - Never commit puzzle inputs or puzzle text. `.gitignore` covers `input*.txt` and `inputs/`.
 - The puzzle input goes in a String node labelled "Puzzle Input" somewhere in the tree (a String node accepts multi-line paste; a group input socket does not). It must be empty in every committed `.blend`. The user checks this. Node trees are always the user's own work: edit a `.blend` only for a file-level fix the user asks for (such as a font path), changing as few bytes as possible, then load it with `blender -b` to verify.
 - Check hidden values too: a socket that is linked keeps the last value typed into it, invisible in the UI (day 4 had the input there). Search the decompressed `.blend` for the input and the answers, and show the user where anything is.
+- A Bake node can pack its result inside the `.blend` (day 7), and that data can hold the input or the answers. Bakes must be empty in a committed file.
 - The user may re-save a `.blend` at any time. Review `git status` and the diff before staging, and do not use `git add -A` blindly.
 - The user may leave a `todo.txt` with instructions in a day folder. It is git-ignored and can hold puzzle text and answers: follow it, copy nothing from the puzzle text, and delete it when done.
 - Media may show the user's own answers. That is fine, but mention it when adding it.
@@ -38,7 +39,7 @@ This repository is public. Never put machine-specific or personal details in tra
 1. Title and puzzle link, then a one-sentence summary of each part in your own words (`**Part 1:**`, `**Part 2:**`). Part 2 is only visible on the site after solving part 1, so the README is where readers learn it. Never copy the puzzle text, its story, examples or answers. Then a short note from the user about the solution (ask if unsure).
 2. The animation, centered with HTML and a fixed width (`<p align="center"><img src="media/animation.gif" alt="..." width="480"></p>`, or `animation.webp`). Several animations (day 3) are named `animation-<name>.webp` and stacked, each in its own centered paragraph at the same `width="480"` with a caption below the image (`<br>` then `<em>Part 1</em>`).
 3. A Notes list when the file needs explaining: which inputs to change, baking before playing, camera tweaks, what the visualization shows beyond the puzzle.
-4. Sections in order: Solution (main tree, then each group), Visualization (overview, one image per frame), Materials (a `###` heading with the name above each material), Compositor. Skip what does not exist. Images come from `media/`.
+4. Sections in order: Solution (main tree, then each group), Visualization (overview and its groups, no image per animation frame), Materials (a `###` heading with the name above each material), Compositor. Skip what does not exist. Images come from `media/`.
 5. Blender 5.2 is the default. If a day needs another version, say so in that day's README.
 
 ## Media
@@ -46,8 +47,10 @@ This repository is public. Never put machine-specific or personal details in tra
 - Upload an animation, not the MP4: GitHub does not play relative MP4 links. The user may send an MP4; keep it outside the repo and commit only `media/animation.gif`, or `media/animation.webp` when a GIF's 256 colours show artifacts (renders with many colours or shading, like day 2).
 - Every day has `media/thumbnail.webp` for the Days grid in the root README: `python .claude/scripts/make_thumbnail.py <day> days/dayXX/media/thumbnail.webp [video.mp4] [webp_quality]` (quality 40 for busy clips such as day 5, to stay near 1 MB). With a video it is the animation (240x320) with a "Day 01" label below, in IBM Plex Mono from `fonts/`. A day without animation uses a still image the user picks, usually a node capture (`slug=Name|@NodeName` captures one node; use zoom 2.0); its editor background becomes the dark blue of the day 1 render. Without either it is a plain placeholder of the same size. A day with several animations uses its main one (day 3: part 2). When a day is finished, replace its placeholder.
 - The Days grid is a centered paragraph of images, 5 per line (`<p align="center">` with `<img ... width="19%">`), not a table: GitHub always draws table borders and sizes columns by content. Finished days are wrapped in a link to their folder; placeholders are not.
-- Convert with `python .claude/scripts/mp4_to_gif.py in.mp4 out.gif|out.webp [width] [fps] [webp_quality]`. Busy clips such as scrolling text get large; WebP quality 50 keeps them readable at about half the size (day 5). Defaults are 480 px wide and 20 fps. Any source rate works (60 or 24 fps in, 20 or 24 fps out), and the 10 s duration stays exact. The script uses one palette and no dithering. A 10 s clip is about 0.8 MB. Keep GIFs under a few MB.
+- Convert with `python .claude/scripts/mp4_to_gif.py in.mp4 out.gif|out.webp [width] [fps] [webp_quality] [slow]`. `slow` plays part of the clip at another speed: `30-570x0.5` plays source frames 30 to 570 at half speed (day 7). Busy clips such as scrolling text get large; WebP quality 50 keeps them readable at about half the size (day 5). Defaults are 480 px wide and 20 fps. Any source rate works (60 or 24 fps in, 20 or 24 fps out), and the 10 s duration stays exact. The script uses one palette and no dithering. A 10 s clip is about 0.8 MB. Keep GIFs under a few MB.
 - Node tree screenshots are captured automatically (next section). If the user sends screenshots instead, join them with `python .claude/scripts/stitch_images.py out.png img1.png img2.png ...`. It works for any number of images, in any order, horizontally or vertically. They must share one zoom and overlap; an image with no node content cannot be placed.
+- Thumbnails carry round badges in their top corners: `noviz` (crossed-out eye, top left) for a day without a visualization in Blender (days 4, 8 and 9), `ai` (top right) for a day with a node group or image made with AI (day 9). Add them last, once, to a fresh thumbnail: `python .claude/scripts/add_badges.py thumbnail.webp out.webp noviz ai`. The root README explains them under the Days grid.
+- A day without a visualization may show an idea for one, drawn with Python and made-up data (`media/visualization-idea.png`, day 9), never the puzzle input. Say in the README that it was made with AI outside Blender.
 - Do not use Git LFS. Files are small, and "Download ZIP" on GitHub does not include LFS files.
 - GitHub rejects files over 100 MB and warns over 50 MB.
 
@@ -61,6 +64,7 @@ python .claude/scripts/stitch_images.py --dir <tmp_dir> days/dayXX/media
 ```
 
 - Before capturing, sort every tree of the file with [blender-nodefmt](https://github.com/carjimcor/blender-nodefmt) (all rules on, at the user's UI scale): `blender file.blend --python nodefmt_cli.py -- --fix --ui-scale <scale>`, then `--check`. Only the layout changes; review the result in the captures.
+- Capture at the user's UI scale (in `CLAUDE.local.md`): nodefmt makes wires straight only at that scale, and at another one they come out slightly diagonal. With the user's own Blender profile it is already set; with an isolated or factory profile, add `--python-expr "import bpy; bpy.context.preferences.view.ui_scale = <scale>"` before `--python`.
 - One run captures every target, so Blender opens once (about 10 s per target). Each target is `slug=Name` or `slug=Name|Frame`, and the slug becomes the image file name.
 - Name can be a Geometry Nodes group (on any object: the script switches to the object that uses it, as in day 6), the compositor group or a material. Frame is the name or label of a Frame node and captures only that part; `@NodeName` captures a single node.
 - For a day, capture every group, the compositor and every material it uses, plus one image per top-level frame of a big group. List them with a quick Blender script (`bpy.data.node_groups`, `bpy.data.materials`).
@@ -89,7 +93,7 @@ python .claude/scripts/stitch_images.py --dir <tmp_dir> days/dayXX/media
 
 ## AI use
 
-The README says AI is used for administrative work and git, and that the Blender files and GN are made by hand. Keep it accurate: do not present generated work as the user's node trees.
+The README says AI is used for administrative work and git, and that the Blender files and GN are made by hand. Keep it accurate: do not present generated work as the user's node trees. A node group made with AI has a name ending in "(AI)" (day 9: Permutations (AI)); the day's README says so where it describes the group, and the thumbnail gets the `ai` badge.
 
 ## Environment
 
