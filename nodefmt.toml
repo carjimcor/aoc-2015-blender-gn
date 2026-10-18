@@ -1,0 +1,4 @@
+# blender-nodefmt settings for every .blend in this repository: all rules on, including the
+# opt-in ones, at the UI scale the node trees are sorted at.
+select = ["ALL"]
+ui-scale = 1.4

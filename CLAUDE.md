@@ -32,7 +32,7 @@ This repository is public. Never put machine-specific or personal details in tra
 - The user may re-save a `.blend` at any time. Review `git status` and the diff before staging, and do not use `git add -A` blindly.
 - The user may leave a `todo.txt` with instructions in a day folder. It is git-ignored and can hold puzzle text and answers: follow it, copy nothing from the puzzle text, and delete it when done.
 - Media may show the user's own answers. That is fine, but mention it when adding it.
-- If an animation shows parts of the input (day 5 scrolls through every string), tell the user before adding it and let them decide. On day 5 they accepted it, since a thousand strings pass in 10 seconds.
+- If an animation shows parts of the input (day 5 scrolls through every string), tell the user before adding it and let them decide. On day 5 they accepted it, since a thousand strings pass in 10 seconds, and on day 10, where the short input is the start of the sequence.
 
 ## Day README
 
@@ -45,10 +45,10 @@ This repository is public. Never put machine-specific or personal details in tra
 ## Media
 
 - Upload an animation, not the MP4: GitHub does not play relative MP4 links. The user may send an MP4; keep it outside the repo and commit only `media/animation.gif`, or `media/animation.webp` when a GIF's 256 colours show artifacts (renders with many colours or shading, like day 2).
-- Every day has `media/thumbnail.webp` for the Days grid in the root README: `python .claude/scripts/make_thumbnail.py <day> days/dayXX/media/thumbnail.webp [video.mp4] [webp_quality]` (quality 40 for busy clips such as day 5, to stay near 1 MB). With a video it is the animation (240x320) with a "Day 01" label below, in IBM Plex Mono from `fonts/`. A day without animation uses a still image the user picks, usually a node capture (`slug=Name|@NodeName` captures one node; use zoom 2.0); its editor background becomes the dark blue of the day 1 render. Without either it is a plain placeholder of the same size. A day with several animations uses its main one (day 3: part 2). When a day is finished, replace its placeholder.
+- Every day has `media/thumbnail.webp` for the Days grid in the root README: `python .claude/scripts/make_thumbnail.py <day> days/dayXX/media/thumbnail.webp [video.mp4] [webp_quality]` (quality 40 for busy clips such as day 5, to stay near 1 MB). With a video it is the animation (240x320) with a "Day 01" label below, in IBM Plex Mono from `fonts/`. A day without animation uses a still image the user picks, usually a node capture; its editor background becomes the dark blue of the day 1 render. Without either it is a plain placeholder of the same size. A day with several animations uses its main one (day 3: part 2). When a day is finished, replace its placeholder.
 - The Days grid is a centered paragraph of images, 5 per line (`<p align="center">` with `<img ... width="19%">`), not a table: GitHub always draws table borders and sizes columns by content. Finished days are wrapped in a link to their folder; placeholders are not.
 - Convert with `python .claude/scripts/mp4_to_gif.py in.mp4 out.gif|out.webp [width] [fps] [webp_quality] [slow]`. `slow` plays part of the clip at another speed: `30-570x0.5` plays source frames 30 to 570 at half speed (day 7). Busy clips such as scrolling text get large; WebP quality 50 keeps them readable at about half the size (day 5). Defaults are 480 px wide and 20 fps. Any source rate works (60 or 24 fps in, 20 or 24 fps out), and the 10 s duration stays exact. The script uses one palette and no dithering. A 10 s clip is about 0.8 MB. Keep GIFs under a few MB.
-- Node tree screenshots are captured automatically (next section). If the user sends screenshots instead, join them with `python .claude/scripts/stitch_images.py out.png img1.png img2.png ...`. It works for any number of images, in any order, horizontally or vertically. They must share one zoom and overlap; an image with no node content cannot be placed.
+- Node tree images are captured with nodefmt (next section). If the user captures a tree by hand, they use the Capture Tree button of the nodefmt add-on, which saves the whole tree as one image.
 - Thumbnails carry round badges in their top corners: `noviz` (crossed-out eye, top left) for a day without a visualization in Blender (days 4, 8 and 9), `ai` (top right) for a day with a node group or image made with AI (day 9). Add them last, once, to a fresh thumbnail: `python .claude/scripts/add_badges.py thumbnail.webp out.webp noviz ai`. The root README explains them under the Days grid.
 - A day without a visualization may show an idea for one, drawn with Python and made-up data (`media/visualization-idea.png`, day 9), never the puzzle input. Say in the README that it was made with AI outside Blender.
 - Do not use Git LFS. Files are small, and "Download ZIP" on GitHub does not include LFS files.
@@ -56,24 +56,19 @@ This repository is public. Never put machine-specific or personal details in tra
 
 ## Capturing node trees
 
-`capture_node_tree.py` drives Blender's own UI, so no manual screenshots are needed. It needs Blender 5.2 or newer; the executable path is in `CLAUDE.local.md`.
+Node tree images come from the Capture Tree tool of [blender-nodefmt](https://github.com/carjimcor/blender-nodefmt), from its command line. Use `nodefmt_cli.py` from the latest `main` of blender-nodefmt (export it with `git archive` to a scratch folder; the local clone may be on another branch). Blender runs with its window and the user's own profile, so the UI scale is theirs (also in `CLAUDE.local.md`). The executable path is in `CLAUDE.local.md`.
 
 ```
-blender file.blend --python .claude/scripts/capture_node_tree.py -- <tmp_dir> 1.0 "main-tree=Day 1" "arrows=Day 1 Visualization|Arrows" "material-floor=Floor"
-python .claude/scripts/stitch_images.py --dir <tmp_dir> days/dayXX/media
+blender days/dayXX/aoc-2015-XX.blend --python nodefmt_cli.py -- --check
+blender days/dayXX/aoc-2015-XX.blend --python nodefmt_cli.py -- --capture "Day 1" --out days/dayXX/media/main-tree.png --zoom 1.0
 ```
 
-- Before capturing, sort every tree of the file with [blender-nodefmt](https://github.com/carjimcor/blender-nodefmt) (all rules on, at the user's UI scale): `blender file.blend --python nodefmt_cli.py -- --fix --ui-scale <scale>`, then `--check`. Only the layout changes; review the result in the captures.
-- Capture at the user's UI scale (in `CLAUDE.local.md`): nodefmt makes wires straight only at that scale, and at another one they come out slightly diagonal. With the user's own Blender profile it is already set; with an isolated or factory profile, add `--python-expr "import bpy; bpy.context.preferences.view.ui_scale = <scale>"` before `--python`.
-- One run captures every target, so Blender opens once (about 10 s per target). Each target is `slug=Name` or `slug=Name|Frame`, and the slug becomes the image file name.
-- Name can be a Geometry Nodes group (on any object: the script switches to the object that uses it, as in day 6), the compositor group or a material. Frame is the name or label of a Frame node and captures only that part; `@NodeName` captures a single node.
-- For a day, capture every group, the compositor and every material it uses, plus one image per top-level frame of a big group. List them with a quick Blender script (`bpy.data.node_groups`, `bpy.data.materials`).
-- Use a scratch folder for `<tmp_dir>`, never the repo. The script never saves, so it can run on the `.blend` in place, or on a copy whose font path still resolves. Run it in the foreground and wait for it to exit.
-- The second argument is the zoom in screen pixels per node unit. Use 1.0 for every image of a day, so all are readable and share one scale. Lower it (about 0.5) only for an overview.
-- Tiles use the editor size, so a bigger Blender window means fewer tiles. They are whole pixels apart, `layout.json` places them exactly, and the stitched image is cropped to the tree with a border (extra room above Geometry Nodes trees for the timing badges).
-- Wide images are scaled down when shown inline on GitHub. They are sharp when opened, so split a very wide tree by frame if it must be readable inline.
-- The script blanks the "Puzzle Input" String node in memory, so the input never reaches an image, and keeps an editor the file was saved with maximized. The stitcher re-checks every tile against its neighbours, because Blender can land a pan a pixel or two off near the edge of the tree.
-- How it works: Blender only sizes new nodes after a redraw, so the script waits between steps. It frames the tree with two temporary reroutes, then pans with `view2d.pan` (whole pixels) and saves each tile with `screen.screenshot_area`. The temporary nodes exist only in memory, and editor regions and the context path overlay are hidden.
+- The user sorts every tree with nodefmt, latest release, with the settings in `nodefmt.toml` at the repo root (every rule on, including opt-in and new ones, and the UI scale). Before capturing, only check, from inside the repo so it finds `nodefmt.toml`. Never `--fix` the user's file, and never check or sort with other settings: the CLI defaults leave opt-in rules off and report sorted trees as unsorted. If the check fails, tell the user.
+- Capture does not hide the puzzle input: check that the "Puzzle Input" node is empty first (it must be empty in every committed file anyway).
+- One Blender run per tree. TREE is a Geometry Nodes group, the compositor group, or `Material: <name>`. The capture never saves the file, so it can run on the `.blend` in place.
+- For a day, capture every group, the compositor and every material it uses, named in kebab-case (`main-tree.png`, `material-floor.png`). List them with a quick Blender script (`bpy.data.node_groups`, `bpy.data.materials`).
+- Use zoom 1.0 for every image of a day, so all are readable and share one scale.
+- Wide images are scaled down when shown inline on GitHub. They are sharp when opened.
 
 ## Fonts
 
