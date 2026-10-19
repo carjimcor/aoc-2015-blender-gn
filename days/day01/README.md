@@ -16,19 +16,27 @@ Fonts: IBM Plex Mono, SIL Open Font License 1.1 ([license](../../fonts/IBMPlexMo
 
 ## Solution
 
+### Day 1
+
 The main tree reads the instructions, runs them and sends the result to the visualization.
 
 ![Main tree](media/main-tree.png)
 
+### Process Instructions
+
 The Process Instructions group walks through the string one character at a time.
 
 ![Process Instructions group](media/process-instructions.png)
+
+### A / B
 
 The A / B group builds the "Processed / Total" text.
 
 ![A / B group](media/a-b.png)
 
 ## Visualization
+
+### Day 1 Visualization
 
 ![Day 1 Visualization group](media/visualization.png)
 

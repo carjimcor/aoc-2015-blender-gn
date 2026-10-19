@@ -40,6 +40,7 @@ This repository is public. Never put machine-specific or personal details in tra
 2. The animation, centered with HTML and a fixed width (`<p align="center"><img src="media/animation.gif" alt="..." width="480"></p>`, or `animation.webp`). Several animations (day 3) are named `animation-<name>.webp` and stacked, each in its own centered paragraph at the same `width="480"` with a caption below the image (`<br>` then `<em>Part 1</em>`).
 3. A Notes list when the file needs explaining: which inputs to change, baking before playing, camera tweaks, what the visualization shows beyond the puzzle.
 4. Sections in order: Solution (main tree, then each group), Visualization (overview and its groups, no image per animation frame), Materials (a `###` heading with the name above each material), Compositor. Skip what does not exist. Images come from `media/`.
+   Above every node tree image goes a `###` heading with the tree's exact name in the `.blend` (the main tree's too: `### Day 1`, not "Main tree"), then a sentence about it, then the image. When one sentence covers several trees, each later tree gets its heading right above its image. A frame of a big tree has a heading with the frame's name. This applies to every page with tree images, `MD5.md` included.
 5. Blender 5.2 is the default. If a day needs another version, say so in that day's README.
 
 ## Media
@@ -93,4 +94,4 @@ The README says AI is used for administrative work and git, and that the Blender
 ## Environment
 
 - Python helpers need `pip install av pillow numpy`. Install to a temporary folder (`pip install --target <dir> ...`, then set `PYTHONPATH`) to keep the machine clean.
-- A `.blend` stores no save times, user names or absolute paths. File times exist only on disk, not in git.
+- A `.blend` stores no save times, but it can store absolute paths with the user name: the file browser of the Shading workspace keeps its last folder in a fixed-size buffer. The user accepts these paths in the committed files. File times exist only on disk, not in git.

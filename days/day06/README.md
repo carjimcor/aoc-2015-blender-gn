@@ -26,19 +26,29 @@ Each part has its own visualization, on its own object: "Day 6 - Part 1" and "Da
 
 ## Solution
 
+### Day 6 - P1
+
 Each part has its own main tree. It builds the grid, stores the position of every light, then runs a repeat zone over the instructions, one per iteration. At the end, the lights that are off are removed and the result is added up.
 
 ![Main tree, part 1](media/main-tree-part-1.png)
 
+### Day 6 - P2
+
 ![Main tree, part 2](media/main-tree-part-2.png)
+
+### Parse Line
 
 Parse Line reads an instruction: the action (toggle, turn on or turn off) and the two corners of the rectangle.
 
 ![Parse Line group](media/parse-line.png)
 
+### Apply Action P1
+
 Apply Action P1 turns the lights inside the rectangle on or off, or toggles them.
 
 ![Apply Action P1 group](media/apply-action-p1.png)
+
+### Apply Action P2
 
 Apply Action P2 changes the brightness of the lights inside the rectangle, never going below 0.
 

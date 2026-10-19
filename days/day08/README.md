@@ -15,13 +15,19 @@ There is no visualization for this day.
 
 ## Solution
 
+### Day 8
+
 The main tree splits the input into lines and sends each one to the P1 and P2 groups inside a repeat zone, which adds up their results.
 
 ![Main tree](media/main-tree.png)
 
+### P1
+
 P1 removes the outer quotes, replaces the escaped backslashes and quotes with a single character and counts the hex escapes, which take four characters of code for one in memory.
 
 ![P1 group](media/p1.png)
+
+### P2
 
 P2 counts the quotes and backslashes inside the outer quotes, which each need one more character, and adds four for the outer quotes: `"` becomes `"\"` at the start and `\""` at the end.
 

@@ -20,33 +20,49 @@ There is no visualization for this day. The input gives distances but no positio
 
 ## Solution
 
+### Day 9
+
 The main tree builds the locations and their distances, lists the IDs of all locations, makes every order of that list and finds the shortest and longest total distance.
 
 ![Main tree](media/main-tree.png)
+
+### Create Connections
 
 Create Connections reads the input line by line and builds a mesh: one point per location, with its ID in `city-ID`, and one edge per line, with its distance in `distance`. A location gets a random position the first time it appears; the positions only keep the points apart.
 
 ![Create Connections group](media/create-connections.png)
 
+### Parse Line
+
 Parse Line splits a line into its two locations and the distance between them.
 
 ![Parse Line group](media/parse-line.png)
+
+### String to ID
 
 String to ID, from [day 7](../day07), turns a location name into a number, since Blender cannot store strings in named attributes.
 
 ![String to ID group](media/string-to-id.png)
 
+### Permutations (AI)
+
 Permutations (AI) makes every order of a list in one long list, the orders one after another. It was made with AI, not by hand. Each item computes its own value from its index: the index gives the order number and the position in it, and the order number, written in the factorial number system, picks each location from the ones not used yet.
 
 ![Permutations (AI) group](media/permutations-ai.png)
+
+### Factorial
 
 Factorial multiplies 1 to N in a repeat zone.
 
 ![Factorial group](media/factorial.png)
 
+### Find Min & Max Paths
+
 Find Min & Max Paths walks through every order in a repeat zone, adds up the distances between consecutive locations in a nested repeat zone, and keeps the smallest and largest total.
 
 ![Find Min & Max Paths group](media/find-min-max-paths.png)
+
+### Get Distance
 
 Get Distance finds the edge between two locations, in either direction, and returns its distance.
 
