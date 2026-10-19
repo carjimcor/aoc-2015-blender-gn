@@ -16,7 +16,7 @@ Solutions to [Advent of Code 2015](https://adventofcode.com/2015) built with Ble
   <a href="days/day09"><img src="days/day09/media/thumbnail.webp" alt="Day 09" width="19%"></a>
   <a href="days/day10"><img src="days/day10/media/thumbnail.webp" alt="Day 10" width="19%"></a>
   <a href="days/day11"><img src="days/day11/media/thumbnail.webp" alt="Day 11" width="19%"></a>
-  <img src="days/day12/media/thumbnail.webp" alt="Day 12" width="19%">
+  <a href="days/day12"><img src="days/day12/media/thumbnail.webp" alt="Day 12" width="19%"></a>
   <img src="days/day13/media/thumbnail.webp" alt="Day 13" width="19%">
   <img src="days/day14/media/thumbnail.webp" alt="Day 14" width="19%">
   <img src="days/day15/media/thumbnail.webp" alt="Day 15" width="19%">
