@@ -15,7 +15,7 @@ Solutions to [Advent of Code 2015](https://adventofcode.com/2015) built with Ble
   <a href="days/day08"><img src="days/day08/media/thumbnail.webp" alt="Day 08" width="19%"></a>
   <a href="days/day09"><img src="days/day09/media/thumbnail.webp" alt="Day 09" width="19%"></a>
   <a href="days/day10"><img src="days/day10/media/thumbnail.webp" alt="Day 10" width="19%"></a>
-  <img src="days/day11/media/thumbnail.webp" alt="Day 11" width="19%">
+  <a href="days/day11"><img src="days/day11/media/thumbnail.webp" alt="Day 11" width="19%"></a>
   <img src="days/day12/media/thumbnail.webp" alt="Day 12" width="19%">
   <img src="days/day13/media/thumbnail.webp" alt="Day 13" width="19%">
   <img src="days/day14/media/thumbnail.webp" alt="Day 14" width="19%">
@@ -32,7 +32,7 @@ Solutions to [Advent of Code 2015](https://adventofcode.com/2015) built with Ble
   <img src="days/day25/media/thumbnail.webp" alt="Day 25" width="19%">
 </p>
 
-A crossed-out eye on a thumbnail marks a day without a visualization in Blender. "AI" marks a day with a node group or an image made with AI (see AI use).
+A crossed-out eye on a thumbnail marks a day without a visualization in Blender. "AI" marks a day with a node group or an image made with AI, which can be the thumbnail itself (see AI use).
 
 ## How to use
 
