@@ -25,6 +25,8 @@ Then the search. Geometry Nodes has no while loop, but a repeat zone runs a set 
 
 ## Solution
 
+### Day 4
+
 The main tree creates one point per batch and runs a For Each Element zone over them. Each point checks "Iterations per Point" numbers from its own starting offset. Points without a match are deleted, the match is stored in the `found` attribute, and the result is baked.
 
 ![Main tree](media/main-tree.png)

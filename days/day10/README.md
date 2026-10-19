@@ -22,37 +22,57 @@ Fonts: IBM Plex Mono, SIL Open Font License 1.1 ([license](../../fonts/IBMPlexMo
 
 ## Solution
 
+### Day 10
+
 The main tree turns the input into one point per digit, with the digit in `digit`. A repeat zone runs the steps. In each step, a point starts a run when its digit differs from the previous one, an Accumulate Field gives every point the number of its run and the length of that run (stored in `count` before anything else changes the points), one point per run is kept, and Duplicate Elements turns it into two: the length and the digit. The number of points is the length of the sequence.
 
 ![Main tree](media/main-tree.png)
 
 ## Visualization
 
+### Adjust Bars
+
 Adjust Bars and Adjust Bars Log place the bars of the two charts: one bar per step, with a linear or logarithmic height, and the answers in orange.
 
 ![Adjust Bars group](media/adjust-bars.png)
 
+### Adjust Bars Log
+
 ![Adjust Bars Log group](media/adjust-bars-log.png)
+
+### Digit Bar
 
 Digit Bar draws one bar.
 
 ![Digit Bar group](media/digit-bar.png)
 
+### First and Last
+
 First and Last shows the first and last 10 digits of a step, with "..." between them once the sequence is longer than 20 digits.
 
 ![First and Last group](media/first-and-last.png)
+
+### Points To Numbers
 
 Points To Numbers turns points into digits colored by their value.
 
 ![Points To Numbers group](media/points-to-numbers.png)
 
+### Step Text
+
 Step Text and Digits Text write the step number and the number of digits, and Format Number adds the thousands separators.
 
 ![Step Text group](media/step-text.png)
 
+### Digits Text
+
 ![Digits Text group](media/digits-text.png)
 
+### Format Number
+
 ![Format Number group](media/format-number.png)
+
+### _controls
 
 `_controls` holds the font shared by every text.
 

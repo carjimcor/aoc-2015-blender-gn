@@ -28,41 +28,61 @@ Every wire is a point that stores its sources and its gate. A repeat zone comput
 
 ## Solution
 
+### Day 7
+
 The main tree turns the input into points, computes every wire in Process Connections, bakes the result and builds the circuit from it.
 
 ![Main tree](media/main-tree.png)
+
+### Generate Points
 
 Generate Points makes one point per line of the input, with its sources, its gate and its own name.
 
 ![Generate Points group](media/generate-points.png)
 
+### Parse Line
+
 Parse Line splits a line into its sources, its gate and its target wire.
 
 ![Parse Line group](media/parse-line.png)
+
+### Operator to Idx
 
 Operator to Idx turns the gate name into a number.
 
 ![Operator to Idx group](media/operator-to-idx.png)
 
+### String to ID
+
 String to ID turns a wire name into a number, or -1 when it is a constant. Blender cannot store strings in named attributes, so every wire is identified by this number instead of its name: each letter's position in the alphabet, as digits of a base-100 number.
 
 ![String to ID group](media/string-to-id.png)
+
+### Override Point
 
 Override Point replaces the source of a wire with a value, for part 2.
 
 ![Override Point group](media/override-point.png)
 
+### Process Connections
+
 Process Connections is the repeat zone: in each iteration it computes the wires whose sources are ready and stores the iteration they were computed in.
 
 ![Process Connections group](media/process-connections.png)
+
+### Sources Ready
 
 Sources Ready checks whether all the sources of a wire already have a value.
 
 ![Sources Ready group](media/sources-ready.png)
 
+### Is a Source
+
 Is a Source tells whether a point is one of the sources of another.
 
 ![Is a Source group](media/is-a-source.png)
+
+### Compute Value
 
 Compute Value applies the gate to the source values and keeps the result in 16 bits.
 
@@ -70,21 +90,31 @@ Compute Value applies the gate to the source values and keeps the result in 16 b
 
 ## Visualization
 
+### Init Position
+
 Init Position places each wire: one row per iteration, wires of the same iteration side by side, and the two long shift wires of each block on the sides.
 
 ![Init Position group](media/init-position.png)
+
+### Create Circuit
 
 Create Circuit instances a gate on each point and draws the wires between them.
 
 ![Create Circuit group](media/create-circuit.png)
 
+### Wire
+
 Wire draws one wire with right angles, from the output of a gate to the matching input of the next.
 
 ![Wire group](media/wire.png)
 
+### Curve to Mesh Line
+
 Curve to Mesh Line and Curve to Mesh Line - Gates turn the wires and the outlines of the gates into meshes for rendering.
 
 ![Curve to Mesh Line group](media/curve-to-mesh-line.png)
+
+### Curve to Mesh Line - Gates
 
 ![Curve to Mesh Line - Gates group](media/curve-to-mesh-line-gates.png)
 

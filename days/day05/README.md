@@ -25,39 +25,57 @@ There are two files. `aoc-2015-05.blend` only computes the answers. `aoc-2015-05
 
 ## Solution
 
+### Day 5
+
 The main tree of `aoc-2015-05.blend` splits the input into lines and checks each one with both sets of rules in a repeat zone, counting the nice strings of each part.
 
 ![Main tree](media/main-tree.png)
+
+### Is Nice? P1
 
 Is Nice? P1 combines the three rules of part 1.
 
 ![Is Nice? P1 group](media/is-nice-p1.png)
 
+### Vowel Count
+
 Vowel Count counts the vowels of a string.
 
 ![Vowel Count group](media/vowel-count.png)
+
+### Repeated Letter
 
 Repeated Letter checks whether any letter appears a given number of times in a row. It builds the run of letters with two Format String nodes: the first writes a format such as `{C:a>2}`, and the second applies it to an empty string.
 
 ![Repeated Letter group](media/repeated-letter.png)
 
+### Match String List
+
 Match String List checks a string against a list of keys, with a choice of operation and of combining them with OR or AND. Part 1 uses it for the forbidden pairs.
 
 ![Match String List group](media/match-string-list.png)
+
+### Is Nice? P2
 
 Is Nice? P2 combines the two rules of part 2.
 
 ![Is Nice? P2 group](media/is-nice-p2.png)
 
+### Repeated Pair
+
 Repeated Pair looks for a pair of letters that appears at least twice.
 
 ![Repeated Pair group](media/repeated-pair.png)
+
+### 3 Simetric Letters
 
 3 Simetric Letters looks for three letters in a row whose first and last are the same.
 
 ![3 Simetric Letters group](media/three-symmetric-letters.png)
 
 ## Visualization
+
+### Day 5
 
 The main tree of `aoc-2015-05-viz.blend` uses the same groups.
 

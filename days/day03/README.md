@@ -34,23 +34,33 @@ The two parts cannot be shown at the same time, so there are three animations: p
 
 ## Solution
 
+### Day 3
+
 The main tree starts from a single point at the origin and runs a repeat zone over the input, one move per iteration. The Factor input sets how much of the input is processed, which drives the animation.
 
 ![Main tree](media/main-tree.png)
+
+### Parse Direction
 
 Parse Direction turns `>`, `<`, `^` and `v` into a step on the grid.
 
 ![Parse Direction group](media/parse-direction.png)
 
+### Process Direction
+
 Process Direction picks who moves (always Santa in part 1, Santa and Robo-Santa in turns in part 2), adds the step to that position and stores it back on point 0.
 
 ![Process Direction group](media/process-direction.png)
+
+### Process Presents
 
 Process Presents looks for a house at the new position: if there is one, it gets one more present; if not, a new point is added.
 
 ![Process Presents group](media/process-presents.png)
 
 ## Visualization
+
+### Points to Cubes
 
 Points to Cubes places a cube on every house, scaled and colored by its number of presents.
 
