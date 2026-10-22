@@ -75,3 +75,8 @@ An idea for an animation that shows only real data, drawn with Python and made-u
 - The distance table, one cell per pair of locations, with the legs of the route being tried outlined.
 - The shortest route, the route being tried and the longest route, unrolled on a straight line, each leg as long as its real distance.
 - How many routes have each total length: bright for the routes tried so far, dark for the rest. The shortest and longest routes are the two ends.
+
+<p align="center">
+  <img src="media/visualization-idea.png" alt="Visualization idea: distance table, shortest, current and longest routes, and all route lengths" width="480"><br>
+  <em>Made-up distances, drawn outside Blender</em>
+</p>

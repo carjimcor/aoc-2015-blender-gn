@@ -8,7 +8,12 @@ https://adventofcode.com/2015/day/11
 
 There is no visualization for this day. Each letter is a point, and a repeat zone moves to the next password and checks the rules until one passes. Next Password finds the letters to increase with an Accumulate Field: the last letter, and every letter followed only by z's. A password with an i, o or l jumps straight past every password that still has that letter.
 
-The thumbnail of this day was made with AI: a frame of a test visualization that is not part of this repository. That is all its AI badge means; the node trees are made by hand.
+The image below, also the thumbnail, is a frame of a test visualization made with AI in a separate Blender file, which is not part of this repository. That is all the AI badge means; the node trees are made by hand.
+
+<p align="center">
+  <img src="media/visualization-idea.png" alt="Visualization idea: the password being tried as letter tiles, the pairs and the straight marked, the three rules and the progress of the search" width="480"><br>
+  <em>Visualization idea, not built: a frame of a test visualization made with AI</em>
+</p>
 
 ## Notes
 
@@ -58,3 +63,17 @@ Turns a position in the alphabet back into its letter.
 The alphabet that Char to ID and ID to Char use.
 
 ![Lower Case Alphabet group](media/lower-case-alphabet.png)
+
+## Visualization idea
+
+A test visualization made with AI in a separate Blender file, not part of this repository. The image is the moment part 1 is found:
+
+- How many passwords have been tried, and the current one, one tile per letter, with the letter before and after each one.
+- The two pairs of equal letters marked above, and the straight of three letters below.
+- The three rules, ticked as they pass.
+- The search: a bar from the input to the part 1 and part 2 passwords.
+
+<p align="center">
+  <img src="media/visualization-idea.png" alt="Visualization idea: the password being tried as letter tiles, the pairs and the straight marked, the three rules and the progress of the search" width="480"><br>
+  <em>A frame of a test visualization made with AI</em>
+</p>
