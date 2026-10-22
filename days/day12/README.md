@@ -64,3 +64,8 @@ An idea for an animation that shows only real data, drawn with Python and a made
 - One cell per character, coloured by its depth, with the red objects struck out.
 - Under each character, a bar as tall as its depth: the red objects are the red stretches.
 - The numbers in order, as bars: part 1 adds them all, part 2 only the ones outside red objects.
+
+<p align="center">
+  <img src="media/visualization-idea.png" alt="Visualization idea: JSON characters coloured by depth, red objects struck out, and the numbers each part adds up" width="480"><br>
+  <em>A made-up JSON, drawn outside Blender</em>
+</p>
