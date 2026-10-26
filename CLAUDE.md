@@ -32,7 +32,7 @@ This repository is public. Never put machine-specific or personal details in tra
 - The user may re-save a `.blend` at any time. Review `git status` and the diff before staging, and do not use `git add -A` blindly.
 - The user may leave a `todo.txt` with instructions in a day folder. It is git-ignored and can hold puzzle text and answers: follow it, copy nothing from the puzzle text, and delete it when done.
 - Media may show the user's own answers. That is fine, but mention it when adding it.
-- If an animation shows parts of the input (day 5 scrolls through every string), tell the user before adding it and let them decide. On day 5 they accepted it, since a thousand strings pass in 10 seconds, and on day 10, where the short input is the start of the sequence.
+- An animation or thumbnail may show the input (day 5 scrolls through every string, day 18 starts from the input grid): the user accepts it, since nobody rebuilds an input from a video. Add it without asking.
 
 ## Day README
 
