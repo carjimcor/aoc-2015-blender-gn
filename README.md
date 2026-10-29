@@ -24,7 +24,7 @@ Solutions to [Advent of Code 2015](https://adventofcode.com/2015) built with Ble
   <a href="days/day17"><img src="days/day17/media/thumbnail.webp" alt="Day 17" width="19%"></a>
   <a href="days/day18"><img src="days/day18/media/thumbnail.webp" alt="Day 18" width="19%"></a>
   <a href="days/day19"><img src="days/day19/media/thumbnail.webp" alt="Day 19" width="19%"></a>
-  <img src="days/day20/media/thumbnail.webp" alt="Day 20" width="19%">
+  <a href="days/day20"><img src="days/day20/media/thumbnail.webp" alt="Day 20" width="19%"></a>
   <img src="days/day21/media/thumbnail.webp" alt="Day 21" width="19%">
   <img src="days/day22/media/thumbnail.webp" alt="Day 22" width="19%">
   <img src="days/day23/media/thumbnail.webp" alt="Day 23" width="19%">
